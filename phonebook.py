@@ -13,7 +13,7 @@ class PhoneBook:
         if not file_exists(self.file_path):
             write_json(self.file_path, [])
 
-        self.contacts = self.load_contacts()
+        self._contacts = self.load_contacts()
 
 
     def load_contacts(self):
@@ -28,14 +28,14 @@ class PhoneBook:
         """
         Save contacts in the JSON
         """
-        write_json(self.file_path, [contact.to_dict() for contact in self.contacts])
+        write_json(self.file_path, [contact.to_dict() for contact in self._contacts])
 
 
     def add_contact(self, new_contact):
         """
         Add a new contact
         """
-        self.contacts.append(new_contact)
+        self._contacts.append(new_contact)
         self.save_contacts()
 
 
@@ -48,8 +48,8 @@ class PhoneBook:
         new_surname = old_contact.surname if surname == "" else surname
         new_phone = old_contact.phone if phone == "" else phone
 
-        index = self.contacts.index(old_contact)
-        self.contacts[index] = Contact(new_name, new_surname, new_phone)
+        index = self._contacts.index(old_contact)
+        self._contacts[index] = Contact(new_name, new_surname, new_phone)
         self.save_contacts()
 
 
@@ -58,7 +58,7 @@ class PhoneBook:
         Delete the selected contact
         """
 
-        self.contacts.remove(contact)
+        self._contacts.remove(contact)
         self.save_contacts()
 
 
@@ -67,7 +67,7 @@ class PhoneBook:
         Find contact by name, surname or both
         """
         matching_contacts = []
-        for contact in self.contacts:
+        for contact in self._contacts:
             if name and surname:
                 if name == contact.name and surname == contact.surname:
                     matching_contacts.append(contact)
@@ -89,10 +89,10 @@ class PhoneBook:
         """
         print("CONTACT LIST")
 
-        if len(self.contacts) == 0:
+        if len(self._contacts) == 0:
             print("Empty")
         else:
-            for i, contact in enumerate(self.contacts):
+            for i, contact in enumerate(self._contacts):
                 print(i+1)
                 print(contact)
                 print("\n")
