@@ -44,12 +44,15 @@ class PhoneBook:
         Edit the selected contact
         """
 
-        new_name = old_contact.name if name == "" else name
-        new_surname = old_contact.surname if surname == "" else surname
-        new_phone = old_contact.phone if phone == "" else phone
+        if name != "":
+            old_contact.set_name(name)
 
-        index = self._contacts.index(old_contact)
-        self._contacts[index] = Contact(new_name, new_surname, new_phone)
+        if surname != "":
+            old_contact.set_surname(surname)
+
+        if phone != "":
+            old_contact.set_phone(phone)
+
         self.save_contacts()
 
 
@@ -69,15 +72,15 @@ class PhoneBook:
         matching_contacts = []
         for contact in self._contacts:
             if name and surname:
-                if name == contact.name and surname == contact.surname:
+                if name == contact.get_name() and surname == contact.get_surname():
                     matching_contacts.append(contact)
 
             elif name:
-                if name == contact.name:
+                if name == contact.get_name():
                     matching_contacts.append(contact)
 
             elif surname:
-                if surname == contact.surname:
+                if surname == contact.get_surname():
                     matching_contacts.append(contact)
 
         return matching_contacts
