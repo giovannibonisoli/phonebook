@@ -21,7 +21,7 @@ def get_menu_option(text, options_number=1):
         return option_number
 
     except ValueError:
-        print("Insert a numeric value corresponding to the listed options")
+        print("Insert a numeric value corresponding to one of the listed options")
         return -1
 
     except AssertionError as e:
@@ -119,6 +119,7 @@ def contact_manager():
                         print("No information changed!")
                     else:
                         phonebook.edit_contact(found_contacts[contact_index], name, surname, phone)
+                        print("Contact changed!")
                     break
 
 
