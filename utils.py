@@ -2,9 +2,6 @@ import re
 import json
 import os
 
-def file_exists(file_path):
-    return os.path.isfile(file_path)
-
 def read_json(file_path):
     """
     Function to read a whole JSON file

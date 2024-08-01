@@ -1,6 +1,6 @@
 import os
 
-from utils import read_json, write_json, file_exists
+from utils import read_json, write_json
 from contact import Contact
 
 class PhoneBook:
@@ -10,7 +10,7 @@ class PhoneBook:
 
     def __init__(self, path):
         self.file_path = os.path.join(path, "contacts.json")
-        if not file_exists(self.file_path):
+        if not os.path.isfile(self.file_path):
             write_json(self.file_path, [])
 
         self._contacts = self.load_contacts()
