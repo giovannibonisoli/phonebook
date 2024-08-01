@@ -164,7 +164,7 @@ def phonebook_manager():
                     if chosen_option == 0:
                         break
                     elif chosen_option != -1:
-                        phonebook.delete_contact(found_contacts[contact_index])
+                        phonebook.delete_contact(found_contacts[chosen_option-1])
                         print("Deleted contact!")
                         break
 
