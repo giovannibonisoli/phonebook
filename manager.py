@@ -4,17 +4,22 @@ from utils import is_valid_phone_number
 from contact import Contact
 
 def show_main_menu():
+    """
+    Print main menu options
+    """
     print("\n")
     print("1. Visualize contacts")
     print("2. Contact search")
     print("3. Add new contact")
     print("4. Edit contact")
     print("5. Delete contact")
-    print("6. Quit")
     print("\n")
 
 
 def get_menu_option(text, options_number=1):
+    """
+    Returns the option selected by the user in a menu
+    """
     try:
         option_number = int(input(text))
         assert option_number in range(1, options_number+1), f"Option {option_number} is not avalaible"
@@ -28,7 +33,11 @@ def get_menu_option(text, options_number=1):
         print(e)
         return -1
 
+
 def input_phone_number(instruction_text="Insert the phone number: "):
+    """
+    Returns a parse a phone number inserted by the user
+    """
     while True:
         phone = input(instruction_text)
         if phone == "" or is_valid_phone_number(phone):
@@ -43,7 +52,9 @@ def input_phone_number(instruction_text="Insert the phone number: "):
 
 
 def search_phonebook_contacts(phonebook):
-
+    """
+    Search contacts in a phonebook based on
+    """
     while True:
         name = input("Insert name (Press Enter to leave empty): ")
         surname = input("Insert surname (Press Enter to leave empty): ")
@@ -54,14 +65,23 @@ def search_phonebook_contacts(phonebook):
             return phonebook.find_contacts(name=name or None, surname=surname or None)
 
 
-def contact_manager():
+def phonebook_manager():
+    """
+    Core manager of ContactEase phonebook
+    """
+
     print("Welcome to ContactEase Phonebook!")
     phonebook = PhoneBook("")
 
     while True:
         show_main_menu()
-        choice_number = get_menu_option("Choose an option:", options_number=6)
-        if choice_number == 1:
+        choice_number = get_menu_option("Choose an option (0 to quit): ", options_number=6)
+        if choice_number == 0:
+            print("Goodbye!")
+            break
+
+            
+        elif choice_number == 1:
             # List al the contacts
             phonebook.visualize_all_contacts()
 
@@ -108,19 +128,23 @@ def contact_manager():
                         print(i+1)
                         print(contact, "\n")
 
-                    message_text = "Insert the number of contact you want to modify: "
-                    contact_index = get_menu_option(message_text, options_number=len(found_contacts)) - 1
+                    message_text = "Insert the numeric index of the contact you want to modify (0 to quit): "
+                    chosen_option = get_menu_option(message_text, options_number=len(found_contacts))
+                    print("\n")
 
-                    name = input("Insert new name (Press enter to leave unchanged): ")
-                    surname = input("Insert new surname (Press enter to leave unchanged): ")
-                    phone = input_phone_number("Insert new phone number (Press enter to leave unchanged): ")
+                    if chosen_option == 0:
+                        break
+                    elif chosen_option != -1:
+                        name = input("Insert new name (Press enter to leave unchanged): ")
+                        surname = input("Insert new surname (Press enter to leave unchanged): ")
+                        phone = input_phone_number("Insert new phone number (Press enter to leave unchanged): ")
 
-                    if name == "" and surname == "" and phone == "":
-                        print("No information changed!")
-                    else:
-                        phonebook.edit_contact(found_contacts[contact_index], name, surname, phone)
-                        print("Contact changed!")
-                    break
+                        if name == "" and surname == "" and phone == "":
+                            print("No information changed!")
+                        else:
+                            phonebook.edit_contact(found_contacts[chosen_option-1], name, surname, phone)
+                            print("Contact changed!")
+                        break
 
 
         elif choice_number == 5:
@@ -135,19 +159,17 @@ def contact_manager():
                         print(i+1)
                         print(contact)
 
-                    message_text = "Insert the number of contact you want to delete: "
-                    contact_index = get_menu_option(message_text, options_number=len(found_contacts)) - 1
+                    message_text = "Insert the numeric index of the contact you want to delete (0 to quit): "
+                    chosen_option = get_menu_option(message_text, options_number=len(found_contacts))
 
-                    phonebook.delete_contact(found_contacts[contact_index])
-                    print("Deleted contact!")
-                    break
+                    if chosen_option == 0:
+                        break
+                    elif chosen_option != -1:
+                        phonebook.delete_contact(found_contacts[contact_index])
+                        print("Deleted contact!")
+                        break
 
-
-
-        elif choice_number == 6:
-            print("Goodbye!")
-            break
 
 
 if __name__ == "__main__":
-    contact_manager()
+    phonebook_manager()
