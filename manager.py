@@ -7,13 +7,12 @@ def show_main_menu():
     """
     Print main menu options
     """
-    print("\n")
+    print("\nMAIN MENU\n")
     print("1. Visualize contacts")
     print("2. Contact search")
     print("3. Add new contact")
     print("4. Edit contact")
-    print("5. Delete contact")
-    print("\n")
+    print("5. Delete contact\n")
 
 
 def get_menu_option(text, options_number=1):
@@ -22,7 +21,7 @@ def get_menu_option(text, options_number=1):
     """
     try:
         option_number = int(input(text))
-        assert option_number in range(1, options_number+1), f"Option {option_number} is not avalaible"
+        assert option_number in range(0, options_number+1), f"Option {option_number} is not avalaible"
         return option_number
 
     except ValueError:
@@ -80,7 +79,7 @@ def phonebook_manager():
             print("Goodbye!")
             break
 
-            
+
         elif choice_number == 1:
             # List al the contacts
             phonebook.visualize_all_contacts()
