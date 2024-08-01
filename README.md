@@ -1,6 +1,6 @@
 # Phonebook
 
-"A simple command-line phonebook management application in Python.
+A simple command-line phonebook management application in Python.
 
 ## How to use it
 
